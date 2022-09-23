@@ -1,9 +1,6 @@
-# Figures of Joy
+# Undertow
 
-Figures of Joy (FOJ) is a generative art piece minted on the Tezos Blockchain with FxHash. FOJ is an exploration of depth and motion. 
-The goal of this experiment was to create objects that seemed as though they were growing and contorting through a three-dimensional space with its own 
-lighting.
+Undertow is a generative art collection exploring flow and wave fields. It is my second piece centered around flowfields but this one being a much simpler iteration of them.
 
 
-
-![image](https://user-images.githubusercontent.com/34043723/191783379-457c5671-3968-4aed-807e-008b57787923.png)
+![image](https://user-images.githubusercontent.com/34043723/192010224-87ff7f66-660a-4072-8990-8448983a4b1b.png)
