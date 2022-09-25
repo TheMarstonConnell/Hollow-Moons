@@ -25,6 +25,10 @@ let doDraw = true
 
 let globRotation = 0;
 
+let weight;
+
+let shapeChoice;
+
 function buildGrid(dw, dh) {
     for (let x = 0; x < dw; x++) {
         let b = []
@@ -93,7 +97,7 @@ function updateLines() {
             continue
         }
 
-        img.strokeWeight(20)
+        img.strokeWeight(weight)
         img.stroke(globColor)
         
         let slast = line.points[line.points.length - 2]
@@ -114,7 +118,9 @@ function setup() {
     w = 8000
     h = 8000
 
-    noiseSeed(fxrand() * 100)
+    shapeChoice = Math.floor(fxrand() * 3)
+
+    noiseSeed(fxrand() * 100000)
 
     let ks = min(windowHeight, windowWidth)
 
@@ -135,22 +141,25 @@ function setup() {
     img.background(background)
 
 
-    globCount = Math.floor(fxrand() * 100) + 1
+    globCount = Math.floor(fxrand() * 100) + 10
     buildGrid(globCount, globCount)
 
-    borderSize = Math.floor(fxrand() * 50)
+    borderSize = Math.floor(fxrand() * 500) + 60
 
     globLineCount = Math.floor(fxrand() * 200) + 100
     makeLines(globLineCount)
 
     globRotation = Math.floor(fxrand() * 4) * 90
 
+    weight = Math.floor(fxrand() * 30) + 4
     
     window.$fxhashFeatures = {
         "Grid Resolution" : globCount,
         "Border Size": borderSize,
         "Chaos": globLineCount,
         "Color": p.name,
+        "Weight": weight,
+        "Cutout": shapeChoice,
     }
 
     console.log(window.$fxhashFeatures)
@@ -241,6 +250,10 @@ function draw() {
     
 
     image(img, 0, 0, width, height)
+    let ratio = width / w
+
+    console.log(ratio)
+    let bsize = borderSize * ratio
 
     fill(background)
     noStroke()
@@ -252,12 +265,32 @@ function draw() {
     vertex(0, height);
     // Interior part of shape, counter-clockwise winding
     beginContour();
-    vertex(borderSize, height-borderSize);
-    vertex(width - borderSize, height - borderSize);
-    vertex(width - borderSize, borderSize);
-    vertex(borderSize, borderSize);
+    vertex(bsize, height-bsize);
+    vertex(width - bsize, height - bsize);
+    vertex(width - bsize, bsize);
+    vertex(bsize, bsize);
 
     endContour();
     endShape(CLOSE);
+
+
+    let kk = weight / ratio
+    strokeWeight(kk)
+    // stroke(globColor)
+    let side = width / 3
+
+    switch (shapeChoice) {
+        case 0:
+            circle(width / 2, height / 2, side)
+            break;
+        case 1:
+            triangle(width / 2 - side / 3 * 2, height / 2 + side / 3 * 2, width / 2 + side / 3 * 2, height / 2 + side / 3 * 2, width / 2, height / 2 - side / 2)
+            break;
+        case 2:
+
+            square(width / 2 - side / 2, height / 2 - side / 2, side)
+            break;
+    }
+
 
 }
